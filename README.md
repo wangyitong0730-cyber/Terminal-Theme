@@ -9,6 +9,8 @@
 <!-- ![效果预览](./screenshots/preview.gif) -->
 
 ## 效果
+<img width="2878" height="1554" alt="image" src="https://github.com/user-attachments/assets/494489e8-5ee2-4e0e-baea-c52b5dcd0cf8" />
+
 
 打开多个终端窗口，每个窗口自动获得不同的主题色：
 
