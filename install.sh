@@ -225,7 +225,9 @@ fi
 # Step 4.5: 安全扫描 — 检查 .zshrc 中是否有明文密钥
 # ============================================================
 if [[ -f "$HOME/.zshrc" ]]; then
-    SECRETS_FOUND=$(grep -niE '(KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL|API_KEY)=' "$HOME/.zshrc" 2>/dev/null | grep -v '^#' | grep -v '# ')
+    # `|| true` 是必须的：no-match 时 grep 退出 1，配合脚本顶部的 `set -e` 会让
+    # 整个安装器在这里静默退出，后面的主题写入逻辑永远不会执行。
+    SECRETS_FOUND=$(grep -niE '(KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL|API_KEY)=' "$HOME/.zshrc" 2>/dev/null | grep -v '^#' | grep -v '# ' || true)
     if [[ -n "$SECRETS_FOUND" ]]; then
         echo ""
         warn "检测到 .zshrc 中可能存在明文密钥："
@@ -376,7 +378,7 @@ mkdir -p "$HOME/.config"
   echo '$character'
   echo "\"\"\""
   echo ""
-  echo "right_format = \"\"\"\\$time\"\"\""
+  echo 'right_format = "$time"'
   echo ""
   echo "[character]"
   echo "success_symbol = \"[❯](bold $_THEME_COLOR)\""
@@ -430,9 +432,8 @@ eval "\$(${STARSHIP_PATH} init zsh)"
 STARSHIP_EVAL
 
 cat >> "$ZSHRC" << 'STARSHIP_TAG'
-_theme_tag="%K{#${_PROMPT_BG[$_IDX]}}%F{#${_PROMPT_FG[$_IDX]}} ${_PROMPT_ICON[$_IDX]} ${_PROMPT_NAME[$_IDX]} %f%k "
-starship_precmd_user_func() { PROMPT="${_theme_tag}${PROMPT}"; }
-precmd_functions+=(starship_precmd_user_func)
+_theme_tag="%K{#${_PROMPT_BG[$_IDX]}}%F{#${_PROMPT_FG[$_IDX]}} ${_PROMPT_ICON[$_IDX]} ${_PROMPT_NAME[$_IDX]} %f%k"
+print -P "${_theme_tag}"
 STARSHIP_TAG
 
 # 插件配置
