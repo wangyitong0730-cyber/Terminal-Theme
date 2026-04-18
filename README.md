@@ -10,6 +10,8 @@
 
 ## 效果
 <img width="2878" height="1554" alt="image" src="https://github.com/user-attachments/assets/494489e8-5ee2-4e0e-baea-c52b5dcd0cf8" />
+<img width="2456" height="1226" alt="image" src="https://github.com/user-attachments/assets/d6d9658e-7cd8-4e31-9c48-336ba2540f41" />
+具体样式可以点击参考这个链接：https://alina-04051915.surge.sh/
 
 
 打开多个终端窗口，每个窗口自动获得不同的主题色：
